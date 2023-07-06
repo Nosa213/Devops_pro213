@@ -81,16 +81,26 @@ region ap-northeast-1 \
 node-type t2.small \
    
 
-7. To delete the EKS clsuter 
-   ```sh 
-   eksctl delete cluster nicholas213 --region ap-northeast-1
-   ```
+   <img width="713" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/d360df44-265e-4eed-945d-f21587ad82fa">
+
+The cloud formation has been completed successfully:
+
+   <img width="1271" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/b8530979-7a71-487e-8531-6902691dffa2">
+
+
+ Two new ec2 t2-micro instances has also been created:
    
+<img width="1272" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/e458cfcd-d1cf-4ee9-962d-047fc3d10682">
+
+
+   
+
 8. Validate your cluster using by creating by checking nodes and by creating a pod 
-   ```sh 
-   kubectl get nodes
-   kubectl run tomcat --image=tomcat 
-   ```
+  ```
+kubectl get nodes
+kubectl run tomcat --image=tomcat 
+```
+
    
    #### Deploying Nginx pods on Kubernetes
 1. Deploying Nginx Container
