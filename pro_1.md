@@ -50,35 +50,43 @@ You can follow same procedure in the official  AWS document [Getting started wit
    ```
   <img width="1266" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/d93d4366-626a-405f-9f7d-8c07334dc8e2">
 
-3. Create an IAM Role and attache it to EC2 instance    
-   `Note: create IAM user with programmatic access if your bootstrap system is outside of AWS`   
-   IAM user should have access to   
-   IAM   
-   EC2   
-   CloudFormation  
-   Note: Check eksctl documentaiton for [Minimum IAM policies](https://eksctl.io/usage/minimum-iam-policies/)
+3. Create an IAM Role and attache it to EC2 instance
+    IAM user should have access to
    
-4. Create your cluster and nodes 
-   ```sh
-   eksctl create cluster --name cluster-name  \
-   --region region-name \
-   --node-type instance-type \
-   --nodes-min 2 \
-   --nodes-max 2 \ 
-   --zones <AZ-1>,<AZ-2>
+    IAM
    
-   example:
-   eksctl create cluster --name valaxy-cluster \
-      --region ap-south-1 \
-   --node-type t2.small \
-    ```
+    EC2
+   
+    CloudFormation
+   
+    AdministratorAccess (Do not grant this access in the real world)
+   
+ Note: Check eksctl documentaiton for [Minimum IAM policies](https://eksctl.io/usage/minimum-iam-policies/)
 
-5. To delete the EKS clsuter 
+   <img width="996" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/f9005c92-8699-40e8-bc00-4c54897a0f3f">
+
+4. Attach the IAM role to your EC2 bootstrap
+   
+   <img width="1273" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/dd5062ec-c8a8-4d8e-88bb-3e07539ff7f4">
+
+Add the IAM role and update
+
+<img width="1252" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/2e8a35c0-ad71-416e-9f54-48649bff1acd">
+
+6. Create your cluster and nodes 
+
+```
+eksctl create cluster --name nicholas213  \
+region ap-northeast-1 \
+node-type t2.small \
+   
+
+7. To delete the EKS clsuter 
    ```sh 
-   eksctl delete cluster valaxy --region ap-south-1
+   eksctl delete cluster nicholas213 --region ap-northeast-1
    ```
    
-6. Validate your cluster using by creating by checking nodes and by creating a pod 
+8. Validate your cluster using by creating by checking nodes and by creating a pod 
    ```sh 
    kubectl get nodes
    kubectl run tomcat --image=tomcat 
