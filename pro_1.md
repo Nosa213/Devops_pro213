@@ -202,7 +202,7 @@ Copy the DNS name and paste it on a new tab:
 **Finally:**
 <img width="1276" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/10085607-e40a-44a5-93bb-9ab17da5a4d6">
 
-**Make sure you do not forget to delete your EKS cluster to avoid charges using the command.
+**Make sure you do not forget to delete your EKS cluster to avoid charges using the command**.
 ```
 eksctl delete cluster name --region ap-northeast-1
 ```
