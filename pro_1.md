@@ -79,13 +79,12 @@ Add the IAM role and update
 eksctl create cluster --name nicholas213  \
 region ap-northeast-1 \
 node-type t2.small \
-   
+```
 
-   <img width="713" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/d360df44-265e-4eed-945d-f21587ad82fa">
+The cloud formation has been completed successfully
 
-The cloud formation has been completed successfully:
+<img width="1273" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/e76a5141-e28e-4a41-8f3d-e07a36aa40bf">
 
-   <img width="1271" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/b8530979-7a71-487e-8531-6902691dffa2">
 
 
  Two new ec2 t2-micro instances has also been created:
@@ -98,18 +97,37 @@ The cloud formation has been completed successfully:
 8. Validate your cluster using by creating by checking nodes and by creating a pod 
   ```
 kubectl get nodes
-kubectl run tomcat --image=tomcat 
+kubectl get all
+kubectl run nickwebapp --image=httpd 
 ```
+We have two nodes running when I execute **kubectl get nodes**
 
-   
+<img width="911" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/f43d36e2-2f0f-47e1-8441-486fc5f7a070">
+
+We can see all the services running by executing **kubectl get all**
+
+<img width="521" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/491af025-44e2-4671-bb0a-57cc3549ad6e">
+
+I was also able to create a pod executing **kubectl run nickwebapp --image=httpd** 
+
+<img width="717" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/83163e3f-6116-45cd-a393-8814d585802e">
+
+ 
    #### Deploying Nginx pods on Kubernetes
 1. Deploying Nginx Container
-    ```sh
+    ```
     kubectl create deployment  demo-nginx --image=nginx --replicas=2 --port=80
-    # kubectl deployment regapp --image=valaxy/regapp --replicas=2 --port=8080
     kubectl get all
     kubectl get pod
-   ```
+    ```
+We have two pods running in our cluster    
+<img width="488" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/9223f936-5d04-43ea-91cd-966cff5eef6f">
+
+
+We can check how many replica set it has created **kubectl get replicaset**
+
+<img width="421" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/69dca79d-d6db-4007-827a-00973435da92">
+
 
 1. Expose the deployment as service. This will create an ELB in front of those 2 containers and allow us to publicly access them.
    ```sh
@@ -117,4 +135,83 @@ kubectl run tomcat --image=tomcat
    # kubectl expose deployment regapp --port=8080 --type=LoadBalancer
    kubectl get services -o wide
    ```
+
+   <img width="590" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/3ee4174e-fa29-495b-814c-02e01fba61cb">
+
+We can verify from the AWS cloud to check the load balancer it has created.
+<img width="1271" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/acca395b-25ea-4fdf-868a-8e5f954cdb17">
+
+## Copy the DNS name of the LoadBalancer and paste it on a different tab ##
+<img width="627" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/ea2f1d3a-7c7d-4e20-9fb9-07793375ae70">
+
+## You should be able to see nginx default page ##
+<img width="1278" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/69c149ca-9555-40ed-acbd-bd74adcde713">
+
+
+## How to create a Manifest file to create a pod and a service ##
+
+**First**, create a yml file: nosapod.yml and input your documentation from **Kubernetes api docmentation** 
+
+<img width="231" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/23cb4c66-5acc-49c6-b8c6-8feb9fc6bab6">
+
+
+
+
+**Next** we need to create a service file: service.yml
+
+<img width="386" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/cec74e00-5ce9-476f-8455-0dd6bdddcb5a">
+
+To create a pod with manifest file we need to run the command
+```
+kubectl apply -f nickspod.yml
+```
+<img width="463" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/333ea5c0-51dd-4cd7-9110-af745d53f7ec">
+
+Apply
+```
+ kubectl apply -f service.yml
+```
+<img width="340" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/58870ee0-b7ab-47ab-b491-4796d9d1e470">
+
+
+**LoadBalancer**
+<img width="1280" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/358bfb51-6874-49b4-a84b-4a000e478123">
+
+
+## Finally, Using labels and selectors ##
+
+First, we need to make a few adjustments to our service.yml documentation. 
+<img width="296" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/96f22220-782f-4ac0-bb3c-50f983254ccc">
+
+
+Execute
+```
+kubectl apply -f service.yml
+```
+<img width="383" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/520c5de6-858e-4b58-93a5-001dd1c92e04">
+
+We can go back and check our newly created load balancer from the AWS cloud 
+
+<img width="1271" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/bf80da1c-cfed-4779-9963-7cb479dca485">
+
+Copy the DNS name and paste it on a new tab:
+<img width="1280" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/7606b7e0-8561-4d26-a911-1f553458c1b3">
+
+
+
+**Finally:**
+<img width="1276" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/10085607-e40a-44a5-93bb-9ab17da5a4d6">
+
+
+
+
+
+
+
+
+
+
+
+
+
 
