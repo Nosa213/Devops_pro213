@@ -163,7 +163,7 @@ We can verify from the AWS cloud to check the load balancer it has created.
 
 To create a pod with manifest file we need to run the command
 ```
-kubectl apply -f nickspod.yml
+kubectl apply -f nosapod.yml
 ```
 <img width="463" alt="image" src="https://github.com/Nosa213/Devops_pro213/assets/125190958/333ea5c0-51dd-4cd7-9110-af745d53f7ec">
 
